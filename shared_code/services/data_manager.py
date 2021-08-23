@@ -1,6 +1,5 @@
 import requests
 import logging
-import sys
 
 from shared_code.models.inverter_power import InverterPower
 
@@ -15,14 +14,10 @@ class DataManager:
             'endTime': end_datetime, 
             'api_key': token } 
 
-        try:
-            logging.info('Fetching inverter data')
-            data = requests.get(url, params=parameters)
-            data.raise_for_status()
-            return data.json()
-        except:
-            logging.error('Unable to retrieve data', sys.exc_info()[0])
-            return data
+        logging.info('Fetching inverter data')
+        data = requests.get(url, params=parameters)
+        data.raise_for_status()
+        return data.json()
 
     def fetchEqupment(self, url_base, site_id, token):
         data = '{}'
@@ -31,14 +26,10 @@ class DataManager:
         parameters = {
             'api_key': token } 
 
-        try:
-            logging.info('Fetching equipment data')
-            data = requests.get(url, params=parameters)
-            data.raise_for_status()
-            return data.json()
-        except:
-            logging.error('Unable to retrieve data', sys.exc_info()[0])
-            return data
+        logging.info('Fetching equipment data')
+        data = requests.get(url, params=parameters)
+        data.raise_for_status()
+        return data.json()
 
     def getInverterSerialNumbers(self, url_base, site_id, token):
         data = self.fetchEqupment(url_base, site_id, token)
@@ -70,29 +61,25 @@ class DataManager:
         for serial in inverterSerials:
             inverter_data = self.fetchInverterData(url_base, site_id, serial, token, start_datetime, end_datetime) 
 
-            try:
-                all_samples = inverter_data['data']['telemetries']
+            all_samples = inverter_data['data']['telemetries']
 
-                if(all_samples is None or len(all_samples) == 0):
-                    raise ValueError(all_samples)
+            if(all_samples is None or len(all_samples) == 0):
+                raise ValueError(all_samples)
 
-                last_sample = all_samples[-1]
+            last_sample = all_samples[-1]
 
-                if(last_sample is None):
-                    raise ValueError(last_sample)
+            if(last_sample is None):
+                raise ValueError(last_sample)
 
-                last_power = last_sample['totalActivePower']
+            last_power = last_sample['totalActivePower']
 
-                total_power = 0
+            total_power = 0
 
-                for sample in all_samples:
-                    total_power += sample['totalActivePower']
+            for sample in all_samples:
+                total_power += sample['totalActivePower']
 
-                average_power = total_power / len(all_samples)
+            average_power = total_power / len(all_samples)
 
-                result.append(InverterPower(serial, average_power, last_power))
-
-            except:
-                logging.error('Unable to retrieve data', sys.exc_info()[0])
+            result.append(InverterPower(serial, average_power, last_power))
 
         return result

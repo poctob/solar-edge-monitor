@@ -12,12 +12,8 @@ def main(mytimer: func.TimerRequest) -> None:
     if mytimer.past_due:
         logging.info('The timer is past due!')
 
-    try:
-        service = OrchestratorService()
-        result = service.checkInverterPower()
-
-        logging.info(result)
-    except Exception as error:
-        logging.error(str(error))
+    service = OrchestratorService()
+    result = service.checkInverterPower(None)
+    logging.info(result)
 
     logging.info('Python timer trigger function ran at %s', utc_timestamp)

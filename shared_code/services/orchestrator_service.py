@@ -6,13 +6,13 @@ from shared_code.services.email_manager import EmailManager
 
 
 class OrchestratorService:
-    def checkInverterPower(self, date):
+    def checkInverterPower(self, date = None):
 
         if(date is None):
             today = datetime.date.today()
         else:
             today = date
-            
+
         today_start = f'{today.year}-{today.month}-{today.day} 12:00:00'
         today_end = f'{today.year}-{today.month}-{today.day} 12:59:59'
 
