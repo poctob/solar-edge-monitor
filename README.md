@@ -14,7 +14,8 @@ Every inverter in the SolarEdge site account will be checked.
 This service is written to run as Azure Function, but it can be easily adopted to run on other cloud platforms or locally.
 There are two function:
 1. Timer triggered: runs every day at 22:00 GMT.
-2. Http triggered: takes a single query parameter **date** in **YYYY-MM-DD** format ex: `?date=2021-08-21`. Http trigger can be used to view inverter output and check inverter power for any day in the past.
+2. Http triggered: takes a single query parameter **date** in **YYYY-MM-DD** format ex: `?date=2021-08-21`. Http trigger can be used to view inverter output and check inverter power for any day in the past. Function URL by default is as follows:
+`https://<your function host url>/api/CheckInverterOutput?date=<date parameter>`
 
 ### Configuration
 The following environmental (Azure Function configuration) values are needed to run this service:
