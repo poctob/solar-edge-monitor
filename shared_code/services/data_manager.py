@@ -64,12 +64,14 @@ class DataManager:
             all_samples = inverter_data['data']['telemetries']
 
             if(all_samples is None or len(all_samples) == 0):
-                raise ValueError(all_samples)
+                result.append(InverterPower(serial, 0.0, 0.0))
+                continue
 
             last_sample = all_samples[-1]
 
             if(last_sample is None):
-                raise ValueError(last_sample)
+                result.append(InverterPower(serial, 0.0, 0.0))
+                continue
 
             last_power = last_sample['totalActivePower']
 
