@@ -133,3 +133,10 @@ local.settings.json
 __blobstorage__
 __azurite_db_blob__.json
 __azurite_db_blob_extent__.json
+ONBOARDING_COMPLETE.md
+.github/chatmodes/Azure_function_codegen_and_deployment.chatmode.md
+__azurite_storage__/__azurite_db_queue__.json
+__azurite_storage__/__azurite_db_queue_extent__.json
+.gitignore
+__azurite_storage__/__azurite_db_table__.json
+__azurite_storage__/AzuriteConfig
